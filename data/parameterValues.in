@@ -1,0 +1,7 @@
+self_renewal_probability_max = 0.95 
+number_of_states = 751
+data_file_name = tumor_time_courses.npz
+positive_gain_Q_wt = 0.8
+positive_gain_Q_mut = 0.8
+signaling_range_negative = 1e3
+negative_gain_Q = 0.06
