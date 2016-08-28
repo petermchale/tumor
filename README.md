@@ -13,6 +13,4 @@ Code development
 ======
 One goal is to make this code faster. 
 
-[![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/petermchale/tumor)
-
  
