@@ -1,5 +1,3 @@
-#!/Users/petermchale/Library/Enthought/Canopy_64bit/User/bin/python
-
 """ Functions needed to calculate the probability that a cycling cell divides in the next unit of time or becomes quiescent
 """
 
@@ -103,7 +101,7 @@ def plot_self_renewal_probability():
         from read import read_into_dict
         parameterValues = read_into_dict('parameterValues.in')
         self_renewal_probability_max = parameterValues['self_renewal_probability_max']
-        return self_renewal_probability_max * W_positive_base(0, 0, x, y, parameterValues) * W_negative_base(0, x+y)
+        return self_renewal_probability_max * W_positive_base(0, 0, x, y, parameterValues) * W_negative_base(0, x+y, parameterValues)
 
     def print_self_renewal_probabilities(x, y):
         print 'number of wild-type quiescent cells = ' + str(x)

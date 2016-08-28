@@ -1,5 +1,3 @@
-#!/Users/petermchale/Library/Enthought/Canopy_64bit/User/bin/python
-
 """ Analyze a tumor growth simulation """
 
 from matplotlib import pyplot as plt
@@ -11,7 +9,7 @@ def analyze_tumor_growth_trajectories():
     Read in data for a large number of tumors and analyze their statistics
     """
 
-    from parse import read_into_dict
+    from read import read_into_dict
     parameterValues = read_into_dict('parameterValues.in')
     data_file_name = parameterValues['data_file_name']
 

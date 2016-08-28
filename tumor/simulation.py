@@ -1,5 +1,3 @@
-#!/Users/petermchale/Library/Enthought/Canopy_64bit/User/bin/python
-
 """ Simulate the stochastic evolution of a tumor """
 
 from matplotlib import pyplot as plt
@@ -135,6 +133,6 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
 
 if __name__ == '__main__':
 
-    animate_tumor_growth(1000, run_mode='plot animation')
+    animate_tumor_growth(400, run_mode='plot animation')
 
-    # generate_tumor_growth_trajectories(3, random_seed=1)
+    # generate_tumor_growth_trajectories(3, random_seed=2)
