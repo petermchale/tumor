@@ -33,7 +33,7 @@ def calculate_tumor_energy(cells):
     """
 
     if len(cells) == 0:
-        print 'this function should not be called with no cells'
+        print('this function should not be called with no cells')
         exit(1)
     elif len(cells) == 1:
         return 'undefined'

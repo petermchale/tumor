@@ -84,19 +84,20 @@ def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot anim
         return (C_cell_positions, Q_cell_positions, mutant_cell_positions, time_text,
                 numberCCells_text, numberQCells_text, numberSteps_text, tumorEnergy_text, cellPairEnergy_text)
 
+    # modern macosx backend does not work with blitting: https://github.com/matplotlib/matplotlib/issues/531
     animation_reference = \
-        animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=1, blit=True, init_func=create_initial_frame, repeat=False)
+        animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=1, blit=False, init_func=create_initial_frame, repeat=False)
 
     if run_mode == 'save animation':
         # requires that user has installed ffmpeg, e.g. using homebrew on Mac OS X
         plt.rcParams['animation.ffmpeg_path'] = '/usr/local/bin/ffmpeg'
         animation_reference.save('tumor.mp4', writer=animation.FFMpegWriter(fps=30), dpi=200)
     elif run_mode == 'plot animation':
-        fig.tight_layout()
+        # fig.tight_layout()
         plt.show()
     else:
-        print '\'' + run_mode + '\'', 'is an invalid run mode'
-        print 'exiting'
+        print('\'' + run_mode + '\'', 'is an invalid run mode')
+        print('exiting')
         exit()
 
 
@@ -122,7 +123,7 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
         number_C_cells[realization, :] = time_course.number_C_cells
         number_Q_cells[realization, :] = time_course.number_Q_cells
         append_log_file(flog, realization, time_course)
-    print 'finished generating time courses\n'
+    print('finished generating time courses\n')
 
     # type '!unzip -l data.npz' in the Python Console to see individual files in zip archive:
     np.savez(parameterValues['data_file_name'],
@@ -133,6 +134,6 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
 
 if __name__ == '__main__':
 
-    animate_tumor_growth(400, run_mode='plot animation')
+    animate_tumor_growth(400, random_seed=1, run_mode='plot animation')
 
     # generate_tumor_growth_trajectories(3, random_seed=2)

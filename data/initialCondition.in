@@ -1,4 +1,4 @@
-C*_cells_x = [-4, 4]
-C*_cells_y = [-4, 4]
-Q_cells_x = [-3, -5, 3, 5]
-Q_cells_y = [-3, -5, 3, 5]
+C*_cells_x = [0]
+C*_cells_y = [0]
+Q_cells_x = [-1, 1, 1, 0]
+Q_cells_y = [-1, 1, 0, 1]

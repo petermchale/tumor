@@ -33,7 +33,7 @@ class Time_Course(object):
         self.number_of_states = number_of_states
 
         time_point_spacing = 0.02
-        self.time_points = [ii * time_point_spacing for ii in xrange(self.number_of_states)]
+        self.time_points = [ii * time_point_spacing for ii in range(self.number_of_states)]
         self.time_points = np.array(self.time_points, dtype=float)
 
         self.number_C_cells = -np.ones(self.number_of_states, dtype=int)
@@ -93,7 +93,7 @@ class Random_Index(object):
         self._index = np.zeros(self._max_number_of_cells, dtype=np.int)
 
         # noinspection PyArgumentList
-        for number_of_cells in xrange(self._min_number_of_cells, self._max_number_of_cells):
+        for number_of_cells in range(self._min_number_of_cells, self._max_number_of_cells):
             self._randomNumbers[number_of_cells] = prng.randint(0, number_of_cells, self._number_indices)
 
     def next(self, number_of_cells):
@@ -254,7 +254,7 @@ class Tumor(object):
             try:
                 self.next_frame()
             except Extinction as exception:  # http://www.scipy-lectures.org/intro/language/exceptions.html
-                print exception.message
+                print(exception.message)
                 self.time_course.pad_with_extinct_states()
                 break
 

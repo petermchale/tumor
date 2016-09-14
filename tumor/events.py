@@ -89,7 +89,7 @@ def execute_divisionQuiescence_event(prng, cells, old_tumor_energy, parameterVal
         elif len(cells) == 2:
             return calculate_tumor_energy(cells)
         else:
-            print 'cell division event cannot produce 1 or 0 cells'
+            print('cell division event cannot produce 1 or 0 cells')
             exit()
 
     else:

@@ -104,9 +104,9 @@ def plot_self_renewal_probability():
         return self_renewal_probability_max * W_positive_base(0, 0, x, y, parameterValues) * W_negative_base(0, x+y, parameterValues)
 
     def print_self_renewal_probabilities(x, y):
-        print 'number of wild-type quiescent cells = ' + str(x)
-        print 'number of mutant quiescent cells = ' + str(y)
-        print 'self-renewal probability = ' + str(self_renewal_probability(x, y))
+        print('number of wild-type quiescent cells = ' + str(x))
+        print('number of mutant quiescent cells = ' + str(y))
+        print('self-renewal probability = ' + str(self_renewal_probability(x, y)))
 
     # how much does the self-renewal probability change if we replace one wild-type Q-cell with a mutant Q-cell?
     print_self_renewal_probabilities(2, 0)
