@@ -8,14 +8,12 @@ from read import read_into_dict
 from tumor import Tumor
 
 
-def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot animation'):
+def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frames, random_seed=None):
     """
     Generate (and optionally save) a movie of the simulated growth of a tumor containing cycling (green) and quiescent (red) cells,
     each of which is either wild-type (indicated by absence of a star) or mutant (indicated by a star).
     """
 
-    initialCondition = read_into_dict('initialCondition.in')
-    parameterValues = read_into_dict('parameterValues.in')
     tumor = Tumor(initialCondition, parameterValues, random_seed=random_seed)
 
     fig = plt.figure(figsize=(7, 7), facecolor='w')
@@ -88,12 +86,27 @@ def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot anim
     anim = \
         animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=1, blit=False, init_func=create_initial_frame, repeat=False)
 
+    return fig, anim
+
+
+def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot animation'):
+    """
+    Generate (and optionally save) a movie of the simulated growth of a tumor containing cycling (green) and quiescent (red) cells,
+    each of which is either wild-type (indicated by absence of a star) or mutant (indicated by a star).
+    """
+
+    initialCondition = read_into_dict('initialCondition.in')
+    parameterValues = read_into_dict('parameterValues.in')
+
+    fig, anim = animate_tumor_growth_base(initialCondition, parameterValues, number_of_frames, random_seed)
+
     if run_mode == 'save animation':
         # requires that user has installed ffmpeg, e.g. using homebrew on Mac OS X
         plt.rcParams['animation.ffmpeg_path'] = '/usr/local/bin/ffmpeg'
         anim.save('tumor.mp4', writer=animation.FFMpegWriter(fps=30), dpi=200)
     elif run_mode == 'plot animation':
-        # fig.tight_layout()
+        # http://stackoverflow.com/questions/37309559/using-matplotlib-giving-me-the-following-warning-userwarning-tight-layout
+        fig.set_tight_layout(True)
         plt.show()
     else:
         print('\'' + run_mode + '\'', 'is an invalid run mode')
@@ -134,6 +147,6 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
 
 if __name__ == '__main__':
 
-    animate_tumor_growth(400, random_seed=1, run_mode='plot animation')
+    animate_tumor_growth(400, random_seed=2, run_mode='plot animation')
 
     # generate_tumor_growth_trajectories(3, random_seed=2)
