@@ -84,14 +84,14 @@ def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot anim
         return (C_cell_positions, Q_cell_positions, mutant_cell_positions, time_text,
                 numberCCells_text, numberQCells_text, numberSteps_text, tumorEnergy_text, cellPairEnergy_text)
 
-    # modern macosx backend does not work with blitting: https://github.com/matplotlib/matplotlib/issues/531
-    animation_reference = \
+    # modern macosx backends do not work with blitting: https://github.com/matplotlib/matplotlib/issues/531
+    anim = \
         animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=1, blit=False, init_func=create_initial_frame, repeat=False)
 
     if run_mode == 'save animation':
         # requires that user has installed ffmpeg, e.g. using homebrew on Mac OS X
         plt.rcParams['animation.ffmpeg_path'] = '/usr/local/bin/ffmpeg'
-        animation_reference.save('tumor.mp4', writer=animation.FFMpegWriter(fps=30), dpi=200)
+        anim.save('tumor.mp4', writer=animation.FFMpegWriter(fps=30), dpi=200)
     elif run_mode == 'plot animation':
         # fig.tight_layout()
         plt.show()
