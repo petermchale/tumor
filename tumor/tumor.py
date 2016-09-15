@@ -28,12 +28,11 @@ class Time_Course(object):
     Contains a uniform grid of time points and the states of the tumor at those time points
     """
 
-    def __init__(self, number_C_cells, number_Q_cells, number_of_states):
+    def __init__(self, number_C_cells, number_Q_cells, parameterValues):
 
-        self.number_of_states = number_of_states
+        self.number_of_states = int(parameterValues['number_of_states'])
 
-        time_point_spacing = 0.02
-        self.time_points = [ii * time_point_spacing for ii in range(self.number_of_states)]
+        self.time_points = [ii * parameterValues['time_point_spacing'] for ii in range(self.number_of_states)]
         self.time_points = np.array(self.time_points, dtype=float)
 
         self.number_C_cells = -np.ones(self.number_of_states, dtype=int)
@@ -196,7 +195,7 @@ class Tumor(object):
         self.relaxation_rate_per_cell = 500
         self._randomIndex = Random_Index(self._prng, self.relaxation_rate_per_cell)
 
-        self.time_course = Time_Course(self.number_of_C_Cells(), self.number_of_Q_Cells(), int(parameterValues['number_of_states']))
+        self.time_course = Time_Course(self.number_of_C_Cells(), self.number_of_Q_Cells(), parameterValues)
 
         self._parameterValues = parameterValues
 
