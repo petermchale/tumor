@@ -20,7 +20,7 @@ def cleanUp_createFile(filename, mode):
 
     fout = open(filename, mode)
     if os.path.isfile(filename):
-        print filename + " created"
+        print(filename + " created")
 
     return fout
 
