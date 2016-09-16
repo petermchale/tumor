@@ -16,7 +16,7 @@ def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frame
 
     tumor = Tumor(initialCondition, parameterValues, random_seed=random_seed)
 
-    fig = plt.figure(figsize=(7, 7), facecolor='w')
+    fig = plt.figure(figsize=(6, 6), facecolor='w')
     half_width_box = 12
     ax = fig.add_subplot(111, aspect='equal', autoscale_on=False, xlim=(-half_width_box, half_width_box), ylim=(-half_width_box, half_width_box))
 
@@ -88,7 +88,6 @@ def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frame
 
     return fig, anim
 
-
 def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot animation'):
     """
     Read in initial conditions & parameter values, generate a movie showing tumor growth, and decide whether to plot or save the movie
@@ -113,22 +112,20 @@ def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot anim
         exit()
 
 
-def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
+def generate_tumor_growth_trajectories_base(initialCondition, parameterValues, number_realizations, random_seed=None, output_directory_name='./'):
     """
     Generate many time courses of tumor growth and save data
     """
 
     prng = np.random.RandomState(random_seed)
     random_seed_array = prng.randint(0, 1000, number_realizations)
-    parameterValues = read_into_dict('parameterValues.in')
-    number_of_states = parameterValues['number_of_states']
+    number_of_states = int(parameterValues['number_of_states'])
     time_points = -np.ones((number_realizations, number_of_states), dtype=float)
-    number_C_cells = -np.ones((number_realizations, number_of_states), dtype=float)
-    number_Q_cells = -np.ones((number_realizations, number_of_states), dtype=float)
-    initialCondition = read_into_dict('initialCondition.in')
+    number_C_cells = -np.ones((number_realizations, number_of_states), dtype=int)
+    number_Q_cells = -np.ones((number_realizations, number_of_states), dtype=int)
     from write import cleanUp_createFile, append_log_file
-    flog = cleanUp_createFile('tumor.log', 'a')
-    for realization in xrange(number_realizations):
+    flog = cleanUp_createFile(output_directory_name + 'tumor.log', 'a')
+    for realization in range(number_realizations):
         tumor = Tumor(initialCondition, parameterValues, random_seed=random_seed_array[realization])
         time_course = tumor.generate_time_course()
         time_points[realization, :] = time_course.time_points
@@ -138,14 +135,24 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
     print('finished generating time courses\n')
 
     # type '!unzip -l data.npz' in the Python Console to see individual files in zip archive:
-    np.savez(parameterValues['data_file_name'],
+    np.savez(output_directory_name + parameterValues['data_file_name'],
              time_points=time_points,
              number_C_cells=number_C_cells,
              number_Q_cells=number_Q_cells)
 
 
+def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
+    """
+    Read in initial conditions & parameter values, and generate many time courses of tumor growth and save data
+    """
+
+    initialCondition = read_into_dict('initialCondition.in')
+    parameterValues = read_into_dict('parameterValues.in')
+
+    generate_tumor_growth_trajectories_base(initialCondition, parameterValues, number_realizations, random_seed)
+
+
 if __name__ == '__main__':
 
-    animate_tumor_growth(400, random_seed=2, run_mode='plot animation')
-
-    # generate_tumor_growth_trajectories(3, random_seed=2)
+    # animate_tumor_growth(number_of_frames=400, random_seed=2, run_mode='plot animation')
+    generate_tumor_growth_trajectories(number_realizations=1, random_seed=2)

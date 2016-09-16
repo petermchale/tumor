@@ -253,7 +253,7 @@ class Tumor(object):
             try:
                 self.next_frame()
             except Extinction as exception:  # http://www.scipy-lectures.org/intro/language/exceptions.html
-                print(exception.message)
+                print(exception)
                 self.time_course.pad_with_extinct_states()
                 break
 
