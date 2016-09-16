@@ -10,7 +10,7 @@ from tumor import Tumor
 
 def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frames, random_seed=None):
     """
-    Generate (and optionally save) a movie of the simulated growth of a tumor containing cycling (green) and quiescent (red) cells,
+    Generate a matplotlib animation of the simulated growth of a tumor containing cycling (green) and quiescent (red) cells,
     each of which is either wild-type (indicated by absence of a star) or mutant (indicated by a star).
     """
 
@@ -84,15 +84,14 @@ def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frame
 
     # modern macosx backends do not work with blitting: https://github.com/matplotlib/matplotlib/issues/531
     anim = \
-        animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=1, blit=False, init_func=create_initial_frame, repeat=False)
+        animation.FuncAnimation(fig, create_frame, frames=number_of_frames, interval=25, blit=False, init_func=create_initial_frame, repeat=False)
 
     return fig, anim
 
 
 def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot animation'):
     """
-    Generate (and optionally save) a movie of the simulated growth of a tumor containing cycling (green) and quiescent (red) cells,
-    each of which is either wild-type (indicated by absence of a star) or mutant (indicated by a star).
+    Read in initial conditions & parameter values, generate a movie showing tumor growth, and decide whether to plot or save the movie
     """
 
     initialCondition = read_into_dict('initialCondition.in')
