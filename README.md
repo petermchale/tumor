@@ -11,7 +11,7 @@ Getting started
 To animate tumor growth, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
 ```
 cd data
-python ../tumor/simulation.py
+python ../tumor_package/animate.py
 ````
 
 Code development
