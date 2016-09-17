@@ -4,22 +4,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 
-def analyze_tumor_growth_trajectories():
+def analyze_tumor_growth_trajectories(data_file_name):
     """
     Read in data for a large number of tumors and analyze their statistics
     """
 
-    from read import read_into_dict
-    parameterValues = read_into_dict('parameterValues.in')
-    data_file_name = parameterValues['data_file_name']
-
     # From the documentation: "For ``.npz`` files,
     # the returned instance of NpzFile class
     # must be closed to avoid leaking file descriptors."
-    with np.load(data_file_name) as data:
-        time_points = data['time_points']
-        number_C_cells = data['number_C_cells']
-        number_Q_cells = data['number_Q_cells']
+    with np.load(data_file_name) as data_set:
+        time_points = data_set['time_points']
+        number_C_cells = data_set['number_C_cells']
+        number_Q_cells = data_set['number_Q_cells']
 
     total_number_cells = number_C_cells + number_Q_cells
 
@@ -27,14 +23,11 @@ def analyze_tumor_growth_trajectories():
     index_at_which_to_plot_histogram = (np.abs(time_points[0, :] - time_at_which_to_plot_histogram)).argmin()
     time_at_which_to_plot_histogram = time_points[0, index_at_which_to_plot_histogram]
 
-    # consider tumors to be those that are larger, at a given time point, than the initial condition
     total_number_cells_at_time_point = total_number_cells[:, index_at_which_to_plot_histogram]
-    initial_condition = total_number_cells[0, 0]
-    number_C_cells__tumors = number_C_cells[total_number_cells_at_time_point > initial_condition, index_at_which_to_plot_histogram]
-    number_Q_cells__tumors = number_Q_cells[total_number_cells_at_time_point > initial_condition, index_at_which_to_plot_histogram]
-    total_number_cells__tumors = total_number_cells[total_number_cells_at_time_point > initial_condition, index_at_which_to_plot_histogram]
+    number_C_cells_at_time_point = number_C_cells[:, index_at_which_to_plot_histogram]
+    number_Q_cells_at_time_point = number_Q_cells[:, index_at_which_to_plot_histogram]
 
-    def plot_figure(number_cells, number_cells__tumors, cell_type='', bin_width=5, step=4):
+    def plot_figure(number_cells, number_cells_at_time_point, cell_type='', bin_width=5, step=4):
 
         # set up figure
         number_subplot_rows = 1
@@ -63,7 +56,7 @@ def analyze_tumor_growth_trajectories():
         # plot distribution of number of cells at chosen time point, conditioned on tumor being large enough
         ax = fig.add_subplot(number_subplot_rows, number_subplot_columns, 2, xlim=(0, 1), ylim=(-1, y_max))
         bin_edges = np.arange(0.5, y_max, bin_width)
-        counts = np.histogram(number_cells__tumors, bin_edges)[0]
+        counts = np.histogram(number_cells_at_time_point, bin_edges)[0]
         counts = np.array(counts)
         probabilities = counts/float(sum(counts))
         rectangle_height = 0.7 * (bin_edges[1] - bin_edges[0])
@@ -74,22 +67,8 @@ def analyze_tumor_growth_trajectories():
         ax.set_xlabel('probability')
         ax.set_ylabel('number of ' + cell_type + ' cells per tumor, \ngiven that tumor is larger than its initial size')
 
-        text_string1 = (str(len(total_number_cells__tumors)) + '/' +
-                        str(len(total_number_cells_at_time_point)) +
-                        ' tumors are larger, at time point indicated by dashed line,\n' +
-                        'than their initial size')
-        tumor_initiation_probability = len(total_number_cells__tumors)/float(len(total_number_cells_at_time_point))
-        text_string2 = '(tumor initiation probability = ' + str(tumor_initiation_probability) + ')'
-        ax.set_title(text_string1 + '\n' + text_string2)
-        fig.savefig('number_cells__' + cell_type + '.png', dpi=300)
-
-    plot_figure(number_C_cells, number_C_cells__tumors, cell_type='cycling')
-    plot_figure(number_Q_cells, number_Q_cells__tumors, cell_type='quiescent')
-    plot_figure(total_number_cells, total_number_cells__tumors)
+    plot_figure(number_C_cells, number_C_cells_at_time_point, cell_type='cycling')
+    # plot_figure(number_Q_cells, number_Q_cells_at_time_point, cell_type='quiescent')
+    # plot_figure(total_number_cells, total_number_cells_at_time_point)
 
     plt.show()
-
-
-if __name__ == '__main__':
-
-    analyze_tumor_growth_trajectories()
