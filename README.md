@@ -11,9 +11,9 @@ Code simulates cell proliferation, e.g. as would occur in a nascent tumor. There
 Getting started
 ======
 
-[Look at the Jupyter Notebook](https://nbviewer.jupyter.org/github/petermchale/tumor/blob/master/demonstration.ipynb?flush_cache=true) in read-only mode using [Jupyter Notebook Viewer](http://nbviewer.jupyter.org). 
+First, [look at the Jupyter Notebook](https://nbviewer.jupyter.org/github/petermchale/tumor/blob/master/demonstration.ipynb?flush_cache=true) in read-only mode using [Jupyter Notebook Viewer](http://nbviewer.jupyter.org). 
 
-To animate tumor growth, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
+Second, download this repository, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
 ```
 cd data
 python ../tumor_package/animate.py
