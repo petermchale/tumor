@@ -6,7 +6,7 @@ Agent-based spatial and stochastic model of tumor growth by [Peter McHale](http:
 * visualize the results of the analysis to maximize insight
 <img src="data/tumor.gif">
 
-In the movie above, there are two types of cells - those that replicate ('cycle' in biological terms) and those that don't (called 'quiescent' by biologists). 
+In the movie above, there are two types of cells - those that replicate ('cycle' in biological terms) and those that do not (called 'quiescent' by biologists). 
 
 For Developers
 ======
