@@ -21,6 +21,6 @@ python ../tumor_package/animate.py
 
 Code development
 ======
-One goal is to make this code faster. Some suggestions for accomplishing this are listed in Issues. 
+One goal is to make this code faster. Some suggestions for accomplishing this are listed under the Issues tab.
 
  
