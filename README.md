@@ -1,8 +1,6 @@
 tumor
 ======
-Author: [Peter McHale](http://ccbs-76.bio.uci.edu/~petermchale/)
-
-Agent-based spatial and stochastic model of tumor growth. 
+Agent-based spatial and stochastic model of tumor growth by [Peter McHale](http://ccbs-76.bio.uci.edu/~petermchale/).
 
 [A Jupyter Notebook](https://nbviewer.jupyter.org/github/petermchale/tumor/blob/master/demonstration.ipynb?flush_cache=true) illustrates how to: 
 * simulate the model in Python 3.x
