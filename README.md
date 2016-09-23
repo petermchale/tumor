@@ -8,9 +8,9 @@ Agent-based spatial and stochastic model of tumor growth by [Peter McHale](http:
 
 In the movie above, there are two types of cells - those that replicate ('cycle' in biological terms) and those that do not (called 'quiescent' by biologists). 
 
-For Developers
+Trying it out
 ======
-Download this repository, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
+To run this movie on your own computer, download this repository, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
 ```
 cd data
 python ../tumor_package/animate.py
