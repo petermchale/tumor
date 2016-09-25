@@ -87,6 +87,7 @@ def animate_tumor_growth_base(initialCondition, parameterValues, number_of_frame
 
     return fig, anim
 
+
 def animate_tumor_growth(number_of_frames, random_seed=None, run_mode='plot animation'):
     """
     Read in initial conditions & parameter values, generate a movie showing tumor growth, and decide whether to plot or save the movie
