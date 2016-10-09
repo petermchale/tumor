@@ -23,8 +23,10 @@ def time_until_next_event(prng, net_rate):
 def execute_divisionQuiescence_event(prng, cells, old_tumor_energy, parameterValues):
     """
     Randomly choose between dividing a random cell versus making it quiescent.
-    This function modifies the list of cells in place, but updates the tumor energy using a functional programming style,
-    i.e. the tumor energy is passed in, updated, and then passed out using a return statement.
+    This function modifies the list of cells in place, 
+    but updates the tumor energy using a functional programming style,
+    i.e. the tumor energy is passed in, updated, 
+    and then passed out using a return statement.
     """
 
     # when parent is cloned (cell division), displace parent and daughter this distance from one another

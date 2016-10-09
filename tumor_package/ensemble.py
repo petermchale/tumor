@@ -48,4 +48,4 @@ def generate_tumor_growth_trajectories(number_realizations, random_seed=None):
 
 if __name__ == '__main__':
 
-    generate_tumor_growth_trajectories(number_realizations=1, random_seed=2)
+    generate_tumor_growth_trajectories(number_realizations=100, random_seed=2)
