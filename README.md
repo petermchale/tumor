@@ -6,10 +6,10 @@ A Python package for agent-based Monte Carlo simulations of tumor growth written
 * visualize the results of the analysis to maximize insight
 <img src="data/tumor.gif">
 
-In the movie above, there are two types of cells - green cells that replicate ('cycle' in biological terms) and red cells that do not (called 'quiescent' by biologists). To run a similar movie on your own computer, download this repository, open `Terminal` (on a Mac), navigate to the repository, and execute the following commands at the command line:
+In the movie above, there are two types of cells - green cells that replicate ('cycle' in biological terms) and red cells that do not (called 'quiescent' by biologists). To run a similar movie on your own computer, download this repository, open `Terminal` (on a Mac), and execute the following commands at the command line:
 ```
-cd data
-python ../tumor_package/animate.py
+cd <path to repository>/data/animation/
+python ../../tumor_package/animate.py
 ````
 
 Planned performance optimizations
