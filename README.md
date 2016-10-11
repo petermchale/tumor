@@ -12,6 +12,5 @@ cd <path to repository>/data/animation/
 python ../../tumor_package/animate.py
 ````
 
-Planned performance optimizations
-=========================
+###Planned performance optimizations
 * Write energy.sum_cell_cell_energies in C/C++ and call from Python code using, e.g., Cython
