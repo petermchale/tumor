@@ -6,7 +6,6 @@ from scipy.spatial.distance import pdist
 
 def sum_cell_cell_energies(cell_cell_distances):
     """Given a list of cell-cell distances, compute the corresponding
-
     cell-cell interaction energies and sum those cell-cell interaction
     energies.  Cell-cell interaction energy is strongly repulsive at
     short distances, weakly attractive at intermediate distances, and
@@ -39,7 +38,6 @@ def sum_cell_cell_energies(cell_cell_distances):
 
 def calculate_tumor_energy(cells):
     """Brute-force computation of tumor energy by summing the cell-cell
-
     interaction energies of all unique cell pairs
     """
 
