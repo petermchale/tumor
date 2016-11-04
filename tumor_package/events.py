@@ -1,4 +1,5 @@
-""" These functions are needed to update a tumor object at every step of the stochastic process """
+""" These functions are needed to update a tumor object at every step
+of the stochastic process """
 
 
 import copy
@@ -11,25 +12,29 @@ from energy import calculate_tumor_energy, sum_cell_cell_energies
 
 
 def time_until_next_event(prng, net_rate):
-    """
-    Compute the time at which the next event is due to occur.
-    All events are modeled as Poisson processes with exponentially distributed waiting times.
-    Units of time are chosen such that the average time it takes for a given cell to divide is 1.
+    """Compute the time at which the next event is due to occur.
+
+    All events are modeled as Poisson processes with exponentially
+    distributed waiting times.  Units of time are chosen such that the
+    average time it takes for a given cell to divide is 1.
     """
 
     return prng.standard_exponential() / net_rate
 
 
-def execute_divisionQuiescence_event(prng, cells, old_tumor_energy, parameterValues):
-    """
-    Randomly choose between dividing a random cell versus making it quiescent.
-    This function modifies the list of cells in place, 
-    but updates the tumor energy using a functional programming style,
-    i.e. the tumor energy is passed in, updated, 
-    and then passed out using a return statement.
+def execute_divisionQuiescence_event(prng, cells,
+                                     old_tumor_energy,
+                                     parameterValues):
+    """Randomly choose between dividing a random cell versus making it
+
+    quiescent.  This function modifies the list of cells in place, but
+    updates the tumor energy using a functional programming style,
+    i.e. the tumor energy is passed in, updated, and then passed out
+    using a return statement.
     """
 
-    # when parent is cloned (cell division), displace parent and daughter this distance from one another
+    # when parent is cloned (cell division), displace parent and daughter this
+    # distance from one another
     distance_between_parent_and_daughter = 1.5
 
     C_cells = [cell for cell in cells if cell.cell_cycle_state == 'cycling']
@@ -37,30 +42,38 @@ def execute_divisionQuiescence_event(prng, cells, old_tumor_energy, parameterVal
 
     Q_cells = [cell for cell in cells if cell.cell_cycle_state == 'quiescent']
 
-    if prng.uniform(0, 1) < self_renewal_probability(random_C_cell, C_cells, Q_cells, parameterValues):
+    if prng.uniform(0, 1) < self_renewal_probability(random_C_cell, C_cells,
+                                                     Q_cells, parameterValues):
         original_parent_position = random_C_cell.position
 
         # randomly displace parent cell
         theta_parent = prng.uniform(0, 2*np.pi)
-        random_C_cell.position = np.add(original_parent_position,
-                                        0.5 * distance_between_parent_and_daughter * np.array([np.cos(theta_parent), np.sin(theta_parent)]))
+        random_C_cell.position = np.add(
+            original_parent_position,
+            0.5 * distance_between_parent_and_daughter *
+            np.array([np.cos(theta_parent), np.sin(theta_parent)]))
 
         # clone parent cell to generate a daughter cell
         daughter_C_cell = copy.deepcopy(random_C_cell)
 
         # randomly displace daughter cell
         theta_daughter = theta_parent + np.pi
-        daughter_C_cell.position = np.add(original_parent_position,
-                                          0.5 * distance_between_parent_and_daughter * np.array([np.cos(theta_daughter), np.sin(theta_daughter)]))
+        daughter_C_cell.position = np.add(
+            original_parent_position,
+            0.5 * distance_between_parent_and_daughter *
+            np.array([np.cos(theta_daughter),
+                      np.sin(theta_daughter)]))
 
         daughter_C_cell.ID = max([cell.ID for cell in cells]) + 1
         cells.append(daughter_C_cell)
 
         def update_tumor_energy():
-            """
-            This updates only the cell-cell interaction energies that actually changed, which scales linearly with the number of cells.
-            That is, it does not wastefully re-compute *all* cell-cell interaction energies,
-            which would scale quadratically with the number of cells.
+            """This updates only the cell-cell interaction energies that
+
+            actually changed, which scales linearly with the number of
+            cells.  That is, it does not wastefully re-compute *all*
+            cell-cell interaction energies, which would scale
+            quadratically with the number of cells.
             """
 
             parent_position = np.array([original_parent_position])
@@ -68,23 +81,35 @@ def execute_divisionQuiescence_event(prng, cells, old_tumor_energy, parameterVal
             daughter2_position = np.array([daughter_C_cell.position])
 
             # use 'is not' not '!=' to check object identity:
-            other_cells = [cell for cell in cells if (cell is not random_C_cell) and (cell is not daughter_C_cell)]
+            other_cells = [cell for cell in cells
+                           if (cell is not random_C_cell) and
+                           (cell is not daughter_C_cell)]
             other_positions = np.array([cell.position for cell in other_cells])
 
-            parent_other_distances = cdist(parent_position, other_positions).ravel()
-            parent_other_energy = sum_cell_cell_energies(parent_other_distances)
+            parent_other_distances = cdist(parent_position,
+                                           other_positions).ravel()
+            parent_other_energy = sum_cell_cell_energies(
+                parent_other_distances)
 
-            daughter1_other_distances = cdist(daughter1_position, other_positions).ravel()
-            daughter1_other_energy = sum_cell_cell_energies(daughter1_other_distances)
+            daughter1_other_distances = cdist(daughter1_position,
+                                              other_positions).ravel()
+            daughter1_other_energy = sum_cell_cell_energies(
+                daughter1_other_distances)
 
-            daughter2_other_distances = cdist(daughter2_position, other_positions).ravel()
-            daughter2_other_energy = sum_cell_cell_energies(daughter2_other_distances)
+            daughter2_other_distances = cdist(daughter2_position,
+                                              other_positions).ravel()
+            daughter2_other_energy = sum_cell_cell_energies(
+                daughter2_other_distances)
 
-            daughter1_daughter2_distance = cdist(daughter1_position, daughter2_position).ravel()
-            daughter1_daughter2_energy = sum_cell_cell_energies(daughter1_daughter2_distance)
+            daughter1_daughter2_distance = cdist(daughter1_position,
+                                                 daughter2_position).ravel()
+            daughter1_daughter2_energy = sum_cell_cell_energies(
+                daughter1_daughter2_distance)
 
-            return (old_tumor_energy - parent_other_energy + daughter1_other_energy
-                    + daughter2_other_energy + daughter1_daughter2_energy)
+            return (old_tumor_energy - parent_other_energy +
+                    daughter1_other_energy +
+                    daughter2_other_energy +
+                    daughter1_daughter2_energy)
 
         if len(cells) > 2:
             return update_tumor_energy()
@@ -201,4 +226,3 @@ def execute_death_event(prng, cells, old_tumor_energy):
         return update_tumor_energy()
     else:
         return 'undefined'
-
