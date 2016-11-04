@@ -13,7 +13,6 @@ from energy import calculate_tumor_energy, sum_cell_cell_energies
 
 def time_until_next_event(prng, net_rate):
     """Compute the time at which the next event is due to occur.
-
     All events are modeled as Poisson processes with exponentially
     distributed waiting times.  Units of time are chosen such that the
     average time it takes for a given cell to divide is 1.
@@ -26,7 +25,6 @@ def execute_divisionQuiescence_event(prng, cells,
                                      old_tumor_energy,
                                      parameterValues):
     """Randomly choose between dividing a random cell versus making it
-
     quiescent.  This function modifies the list of cells in place, but
     updates the tumor energy using a functional programming style,
     i.e. the tumor energy is passed in, updated, and then passed out
@@ -69,7 +67,6 @@ def execute_divisionQuiescence_event(prng, cells,
 
         def update_tumor_energy():
             """This updates only the cell-cell interaction energies that
-
             actually changed, which scales linearly with the number of
             cells.  That is, it does not wastefully re-compute *all*
             cell-cell interaction energies, which would scale
@@ -126,7 +123,8 @@ def execute_divisionQuiescence_event(prng, cells,
 
 def execute_reactivation_event(prng, cells):
     """
-    Randomly choose between reactivating a random quiescent cell (i.e. make it a cycling cell) versus leaving it alone.
+    Randomly choose between reactivating a random quiescent cell 
+    (i.e. make it a cycling cell) versus leaving it alone.
     This function modifies the list of cells in place.
     """
 
