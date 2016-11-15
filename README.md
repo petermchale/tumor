@@ -11,6 +11,3 @@ In the movie above, there are two types of cells - green cells that replicate ('
 cd <path to repository>/data/animation/
 python ../../tumor_package/animate.py
 ````
-
-###Planned performance optimizations
-* Write energy.sum_cell_cell_energies in C/C++ and call from Python code using, e.g., Cython
